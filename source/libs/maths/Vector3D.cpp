@@ -46,6 +46,14 @@ double Math::Vector3D::dot(const Vector3D &vec)
     return dot_product;
 }
 
+Math::Vector3D Math::Vector3D::operator=(const Vector3D &vec)
+{
+    _x = vec._x;
+    _y = vec._y;
+    _z = vec._z;
+    return *this;
+}
+
 Math::Vector3D Math::Vector3D::operator+(const Vector3D &vec)
 {
     Vector3D newVec(vec._x + _x, vec._y + _y, vec._z + _z);

@@ -22,6 +22,8 @@ namespace Math
             double length();
             double dot(const Vector3D &vec);
 
+            Math::Vector3D operator=(const Vector3D &vec);
+
             Math::Vector3D operator+(const Vector3D &vec);
             Math::Vector3D operator-(const Vector3D &vec);
             Math::Vector3D operator*(const Vector3D &vec);
