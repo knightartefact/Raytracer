@@ -22,7 +22,7 @@ Math::Vector3D::Vector3D(double x, double y, double z) :
 {
 }
 
-Math::Vector3D::Vector3D(Vector3D &vector) :
+Math::Vector3D::Vector3D(const Vector3D &vector) :
     _x(vector._x),
     _y(vector._y),
     _z(vector._z)

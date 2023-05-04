@@ -7,11 +7,13 @@
 
 CXX	=	g++
 
-SRC	=	source/main.cpp
+SRC	=	source/main.cpp\
+		source/Sphere.cpp\
+		source/Ray.cpp\
 
 OBJ	=	$(SRC:%.cpp=%.o)
 
-EXEC	=	objloader
+EXEC	=	raytracer
 
 LDFLAGS	=	-Lsource/libs/OBJLoader -lobjld\
 			-Lsource/libs/maths -lmaths

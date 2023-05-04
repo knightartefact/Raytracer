@@ -14,7 +14,7 @@ namespace Math
         public:
             Vector3D();
             Vector3D(double x, double y, double z);
-            Vector3D(Vector3D &vector);
+            Vector3D(const Vector3D &vector);
             Vector3D(Vector3D &&vector) = default;
 
             ~Vector3D() = default;
