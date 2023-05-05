@@ -17,8 +17,6 @@ OBJ	=	$(SRC:%.cpp=%.o)
 
 EXEC	=	raytracer
 
-LDFLAGS	=	-Lsource/libs/OBJLoader -lobjld
-
 CPPFLAGS	=	-I source/libs/OBJLoader
 
 CFLAGS	=	-Wall -Wextra
@@ -29,7 +27,7 @@ all: $(EXEC)
 	$(CXX) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 $(EXEC): OBJLoader $(OBJ)
-	$(CXX) -o $@ $(OBJ) $(CFLAGS) $(LDFLAGS)
+	$(CXX) -o $@ $(OBJ) $(CFLAGS)
 
 debug: CFLAGS += -g3
 debug: OBJLoader_debug maths_debug $(EXEC)

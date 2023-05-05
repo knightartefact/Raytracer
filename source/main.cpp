@@ -42,6 +42,14 @@ int main(int ac, char **av)
     Math::Vector3D rayDirection(-7.37, -6.48, 2.98);
     RayTracer::Ray ray(rayOrigin, rayDirection);
 
+    if (ac == 2) {
+        std::string help_checker = av[1];
+        std::string help = "--help";
+        if (help_checker == help) {
+            std::cout << "USAGE: ./raytracer <SCENE_FILE>\n\tSCENE_FILE: scene configuration\n";
+            return 0;
+        }
+    }
     if (sphere.hits(ray)) {
         std::cout << "It's a hit!" << std::endl;
     } else {
