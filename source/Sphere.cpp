@@ -17,10 +17,24 @@ RayTracer::Sphere::Sphere(const Math::Point3D &center, double radius) :
 
 bool RayTracer::Sphere::hits(const RayTracer::Ray &ray)
 {
-    double discriminant = 0.0;
-    double b = 2 * ((ray._direction._x * ray._origin._x) + (ray._direction._y * ray._origin._y) + (ray._direction._z * ray._origin._z));
-    double c =  std::pow(ray._origin._x, 2) + std::pow(ray._origin._y, 2) + std::pow(ray._origin._z, 2) - std::pow(_radius, 2);
+    // Math::Vector3D direction = ray._direction;
+    // Math::Point3D origin = ray._origin;
 
-    discriminant = std::pow(b, 2) - (4 * c);
-    return (discriminant >= 0 ? true : false);
+    // double discriminant = 0.0;
+    // double a = direction.dot(direction);
+    // double b = 2 * ((direction._x * origin._x) + (direction._y * origin._y) + (direction._z * origin._z));
+    // double c =  std::pow(origin._x, 2) + std::pow(origin._y, 2) + std::pow(origin._z, 2) - std::pow(_radius, 2);
+
+    // discriminant = std::pow(b, 2) - (4 * a * c);
+    // return (discriminant >= 0 ? true : false);
+
+    Math::Point3D oc = ray._origin - _center;
+
+    double a =  ray._direction.dot(ray._direction);
+    double b = 2.0 * ray._direction.dot(oc);
+    double c = oc.dot(oc) - _radius * _radius;
+    double discriminant = std::pow(b, 2) - (4 * a * c);
+
+    return (discriminant >= 0);
+
 }

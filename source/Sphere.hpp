@@ -7,7 +7,7 @@
 
 #ifndef SPHERE_HPP_
     #define SPHERE_HPP_
-    #include "libs/maths/Point3D.hpp"
+    #include "Point3D.hpp"
 
 namespace RayTracer
 {

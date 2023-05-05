@@ -10,13 +10,14 @@ CXX	=	g++
 SRC	=	source/main.cpp\
 		source/Sphere.cpp\
 		source/Ray.cpp\
+		source/Vector3D.cpp\
+		source/Point3D.cpp\
 
 OBJ	=	$(SRC:%.cpp=%.o)
 
 EXEC	=	raytracer
 
-LDFLAGS	=	-Lsource/libs/OBJLoader -lobjld\
-			-Lsource/libs/maths -lmaths
+LDFLAGS	=	-Lsource/libs/OBJLoader -lobjld
 
 CPPFLAGS	=	-I source/libs/OBJLoader
 
@@ -27,24 +28,11 @@ all: $(EXEC)
 %.o: %.cpp
 	$(CXX) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
-$(EXEC): OBJLoader maths $(OBJ)
+$(EXEC): OBJLoader $(OBJ)
 	$(CXX) -o $@ $(OBJ) $(CFLAGS) $(LDFLAGS)
 
 debug: CFLAGS += -g3
 debug: OBJLoader_debug maths_debug $(EXEC)
-
-## Maths
-maths:
-	make -C source/libs/maths
-
-maths_debug:
-	make -C source/libs/maths debug
-
-maths_clean:
-	make -C source/libs/maths clean
-
-maths_fclean:
-	make -C source/libs/maths fclean
 
 ## OBJ loader
 OBJLoader:
@@ -59,15 +47,14 @@ OBJLoader_clean:
 OBJLoader_fclean:
 	make -C source/libs/OBJLoader fclean
 
-clean: OBJLoader_clean maths_clean
+clean: OBJLoader_clean
 	$(RM) $(OBJ)
 
-fclean: clean OBJLoader_fclean maths_fclean
+fclean: clean OBJLoader_fclean
 	$(RM) $(EXEC)
 
 re: fclean all
 
-.PHONY: all re fclean clean OBJLoader_clean OBJLoader_fclean OBJLoader\
-		maths maths_clean maths_fclean maths_debug
+.PHONY: all re fclean clean OBJLoader_clean OBJLoader_fclean OBJLoader
 
 

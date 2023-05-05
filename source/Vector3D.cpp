@@ -6,6 +6,7 @@
 */
 
 #include "Vector3D.hpp"
+#include "Point3D.hpp"
 #include <cmath>
 
 Math::Vector3D::Vector3D() :
@@ -29,7 +30,7 @@ Math::Vector3D::Vector3D(const Vector3D &vector) :
 {
 }
 
-double Math::Vector3D::length()
+double Math::Vector3D::length() const
 {
     double pow_x = std::pow(_x, 2);
     double pow_y = std::pow(_y, 2);
@@ -39,14 +40,21 @@ double Math::Vector3D::length()
     return length;
 }
 
-double Math::Vector3D::dot(const Vector3D &vec)
+double Math::Vector3D::dot(const Vector3D &vec) const
 {
     double dot_product = (vec._x * _x) + (vec._y * _y) + (vec._z * _z);
 
     return dot_product;
 }
 
-Math::Vector3D Math::Vector3D::operator=(const Vector3D &vec)
+double Math::Vector3D::dot(const Point3D &point) const
+{
+    double dot_product = (point._x * _x) + (point._y * _y) + (point._z * _z);
+
+    return dot_product;
+}
+
+Math::Vector3D &Math::Vector3D::operator=(const Vector3D &vec)
 {
     _x = vec._x;
     _y = vec._y;
@@ -54,21 +62,21 @@ Math::Vector3D Math::Vector3D::operator=(const Vector3D &vec)
     return *this;
 }
 
-Math::Vector3D Math::Vector3D::operator+(const Vector3D &vec)
+Math::Vector3D Math::Vector3D::operator+(const Vector3D &vec) const
 {
     Vector3D newVec(vec._x + _x, vec._y + _y, vec._z + _z);
 
     return newVec;
 }
 
-Math::Vector3D Math::Vector3D::operator-(const Vector3D &vec)
+Math::Vector3D Math::Vector3D::operator-(const Vector3D &vec) const
 {
     Vector3D newVec(vec._x - _x, vec._y - _y, vec._z - _z);
 
     return newVec;
 }
 
-Math::Vector3D Math::Vector3D::operator*(const Vector3D &vec)
+Math::Vector3D Math::Vector3D::operator*(const Vector3D &vec) const
 {
     Vector3D newVec(vec._x * _x, vec._y * _y, vec._z * _z);
 
@@ -76,28 +84,28 @@ Math::Vector3D Math::Vector3D::operator*(const Vector3D &vec)
     return newVec;
 }
 
-Math::Vector3D Math::Vector3D::operator*(double scale)
+Math::Vector3D Math::Vector3D::operator*(double scale) const
 {
     Vector3D newVec(_x * scale, _y * scale, _z * scale);
 
     return newVec;
 }
 
-Math::Vector3D Math::Vector3D::operator/(const Vector3D &vec)
+Math::Vector3D Math::Vector3D::operator/(const Vector3D &vec) const
 {
     Vector3D newVec(vec._x / _x, vec._y / _y, vec._z / _z);
 
     return newVec;
 }
 
-Math::Vector3D Math::Vector3D::operator/(double scale)
+Math::Vector3D Math::Vector3D::operator/(double scale) const
 {
     Vector3D newVec(_x / scale, _y / scale, _z / scale);
 
     return newVec;
 }
 
-Math::Vector3D Math::Vector3D::operator+=(const Vector3D &vec)
+Math::Vector3D &Math::Vector3D::operator+=(const Vector3D &vec)
 {
     this->_x = this->_x + vec._x;
     this->_y = this->_y + vec._y;
@@ -106,7 +114,7 @@ Math::Vector3D Math::Vector3D::operator+=(const Vector3D &vec)
     return *this;
 }
 
-Math::Vector3D Math::Vector3D::operator-=(const Vector3D &vec)
+Math::Vector3D &Math::Vector3D::operator-=(const Vector3D &vec)
 {
     this->_x = this->_x - vec._x;
     this->_y = this->_y - vec._y;
@@ -115,7 +123,7 @@ Math::Vector3D Math::Vector3D::operator-=(const Vector3D &vec)
     return *this;
 }
 
-Math::Vector3D Math::Vector3D::operator*=(const Vector3D &vec)
+Math::Vector3D &Math::Vector3D::operator*=(const Vector3D &vec)
 {
     this->_x = this->_x * vec._x;
     this->_y = this->_y * vec._y;
@@ -124,7 +132,7 @@ Math::Vector3D Math::Vector3D::operator*=(const Vector3D &vec)
     return *this;
 }
 
-Math::Vector3D Math::Vector3D::operator*=(double scale)
+Math::Vector3D &Math::Vector3D::operator*=(double scale)
 {
     this->_x = this->_x * scale;
     this->_y = this->_y * scale;
@@ -133,7 +141,7 @@ Math::Vector3D Math::Vector3D::operator*=(double scale)
     return *this;
 }
 
-Math::Vector3D Math::Vector3D::operator/=(const Vector3D &vec)
+Math::Vector3D &Math::Vector3D::operator/=(const Vector3D &vec)
 {
     this->_x = this->_x / vec._x;
     this->_y = this->_y / vec._y;
@@ -142,7 +150,7 @@ Math::Vector3D Math::Vector3D::operator/=(const Vector3D &vec)
     return *this;
 }
 
-Math::Vector3D Math::Vector3D::operator/=(double scale)
+Math::Vector3D &Math::Vector3D::operator/=(double scale)
 {
     this->_x = this->_x / scale;
     this->_y = this->_y / scale;

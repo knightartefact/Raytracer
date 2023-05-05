@@ -20,8 +20,12 @@ namespace Math
             Point3D(Point3D &&point) = default;
             ~Point3D() = default;
 
-            Point3D operator=(const Point3D &point);
-            Point3D operator+(const Vector3D &vec);
+            double dot(const Vector3D &vec) const;
+            double dot(const Point3D &point) const;
+
+            Point3D &operator=(const Point3D &point);
+            Point3D operator-(const Point3D &point) const;
+            Point3D operator+(const Vector3D &vec) const;
 
         public:
             double _x;

@@ -7,8 +7,8 @@
 
 #ifndef RAY_HPP_
     #define RAY_HPP_
-    #include "libs/maths/Vector3D.hpp"
-    #include "libs/maths/Point3D.hpp"
+    #include "Vector3D.hpp"
+    #include "Point3D.hpp"
 
 namespace RayTracer
 {
