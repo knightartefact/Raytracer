@@ -29,6 +29,13 @@ Math::Point3D::Point3D(const Point3D &point) :
 {
 }
 
+Math::Point3D::Point3D(const Vector3D &vec) :
+    _x(vec._x),
+    _y(vec._y),
+    _z(vec._z)
+{
+}
+
 double Math::Point3D::dot(const Vector3D &vec) const
 {
     double dot_product = (vec._x * _x) + (vec._y * _y) + (vec._z * _z);
@@ -51,6 +58,13 @@ Math::Point3D &Math::Point3D::operator=(const Point3D &point)
     return *this;
 }
 
+Math::Point3D &Math::Point3D::operator=(const Vector3D &vec)
+{
+    _x = vec._x;
+    _y = vec._y;
+    _z = vec._z;
+    return *this;}
+
 Math::Point3D Math::Point3D::operator+(const Vector3D &vec) const
 {
     Point3D newPoint;
@@ -68,5 +82,15 @@ Math::Point3D Math::Point3D::operator-(const Point3D &point) const
     newPoint._x = _x - point._x;
     newPoint._y = _y - point._y;
     newPoint._z = _z - point._z;
+    return newPoint;
+}
+
+Math::Point3D Math::Point3D::operator-(const Vector3D &vec) const
+{
+    Point3D newPoint;
+
+    newPoint._x = _x - vec._x;
+    newPoint._y = _y - vec._y;
+    newPoint._z = _z - vec._z;
     return newPoint;
 }

@@ -7,17 +7,25 @@
 
 CXX	=	g++
 
+SRC_DIRS	=	source\
+				source/Maths\
+				source/Primitives\
+				source/Utils\
+
 SRC	=	source/main.cpp\
-		source/Sphere.cpp\
+		source/Primitives/Sphere.cpp\
 		source/Ray.cpp\
-		source/Vector3D.cpp\
-		source/Point3D.cpp\
+		source/Maths/Vector3D.cpp\
+		source/Maths/Point3D.cpp\
+		source/Primitives/Rectangle3D.cpp\
+		source/Camera.cpp\
+		source/Utils/Color.cpp\
 
 OBJ	=	$(SRC:%.cpp=%.o)
 
 EXEC	=	raytracer
 
-CPPFLAGS	=	-I source/libs/OBJLoader
+CPPFLAGS	=	-I source/libs/OBJLoader $(SRC_DIRS:%=-I%)
 
 CFLAGS	=	-Wall -Wextra
 

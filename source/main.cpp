@@ -6,41 +6,18 @@
 */
 
 #include <iostream>
-#include "OBJLoader.hpp"
+#include <cstdlib>
 #include "Ray.hpp"
 #include "Sphere.hpp"
-
-// int main(int ac, char **av)
-// {
-//     (void)ac;
-//     OBJLoader::Object model;
-
-//     try {
-//         OBJLoader::OBJLoader loader(av[1]);
-//         loader.parseObjFile();
-//         model = loader.getObject();
-//     } catch (std::exception &e) {
-//         std::cout << e.what() << std::endl;
-//         return 84;
-//     }
-//     std::cout << "Nb vertices: " << model.getVertices().size() << std::endl;
-//     std::cout << "Nb normals: " << model.getVertexNormals().size() << std::endl;
-//     std::cout << "Nb textures: " << model.getVertexTextures().size() << std::endl;
-//     std::cout << "Nb faces: " << model.getFaces().size() << std::endl;
-
-//     std::cout << "first vertex: " << model.getVertices().front() << std::endl;
-//     std::cout << "first face: " << model.getFaces().front() << std::endl;
-//     return 0;
-// }
+#include "Camera.hpp"
 
 int main(int ac, char **av)
 {
-    Math::Point3D center(-4, -3, 0);
-    RayTracer::Sphere sphere(center, 3);
-
-    Math::Point3D rayOrigin(3.73, 3.52, 0);
-    Math::Vector3D rayDirection(-7.37, -6.48, 2.98);
-    RayTracer::Ray ray(rayOrigin, rayDirection);
+    int width = 256;
+    int height = 256;
+    RayTracer::Camera cam(Math::Point3D(0, 0, 0), std::atoi(av[1]));
+    RayTracer::Sphere sphere(Math::Point3D(0, 0, -10), 3, RayTracer::Color(0.5, 0.5 ,0.5));
+    RayTracer::Sphere sphere2(Math::Point3D(-3, 5, -7), 3, RayTracer::Color(0.5, 0.5 ,0.5));
 
     if (ac == 2) {
         std::string help_checker = av[1];
@@ -50,10 +27,38 @@ int main(int ac, char **av)
             return 0;
         }
     }
-    if (sphere.hits(ray)) {
-        std::cout << "It's a hit!" << std::endl;
-    } else {
-        std::cout << "Bouuuuh you missed!" << std::endl;
+    std::cout << "P3\n" << width << " " << height << "\n255" << std::endl;
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            double u = (float)x / width;
+            double v = (float)y / height;
+
+            RayTracer::Ray ray = cam.ray(u, v);
+            int r, g, b;
+            double solution;
+            if ((solution = sphere.hits(ray)) > 0) {
+                Math::Vector3D normal = sphere.normal(ray.at(solution));
+                normal.normalize();
+                RayTracer::Color color(normal._x, normal._y, normal._z);
+                r = color.r();
+                g = color.g();
+                b = color.b();
+            }
+            else if ((solution = sphere2.hits(ray)) > 0) {
+                Math::Vector3D normal = sphere.normal(ray.at(solution));
+                normal.normalize();
+                RayTracer::Color color(normal._x, normal._y, normal._z);
+                r = color.r();
+                g = color.g();
+                b = color.b();
+
+            } else {
+                r = 0xAD;
+                g = 0xD8;
+                b = 0xE6;
+            }
+            std::cout << r << " " << g << " " << b << std::endl;
+        }
     }
     return 0;
 }

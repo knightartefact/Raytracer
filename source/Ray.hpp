@@ -6,9 +6,9 @@
 */
 
 #ifndef RAY_HPP_
-    #define RAY_HPP_
-    #include "Vector3D.hpp"
-    #include "Point3D.hpp"
+#define RAY_HPP_
+#include "Vector3D.hpp"
+#include "Point3D.hpp"
 
 namespace RayTracer
 {
@@ -21,6 +21,10 @@ namespace RayTracer
             ~Ray() = default;
 
             Ray operator=(const Ray &ray);
+
+            Math::Point3D at(double k) {
+                return (_origin + _direction * k);
+            }
 
         public:
             Math::Point3D _origin;

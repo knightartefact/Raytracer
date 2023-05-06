@@ -5,9 +5,10 @@
 ** Vector3D
 */
 
+#include <iostream>
+#include <cmath>
 #include "Vector3D.hpp"
 #include "Point3D.hpp"
-#include <cmath>
 
 Math::Vector3D::Vector3D() :
     _x(0.0),
@@ -30,6 +31,13 @@ Math::Vector3D::Vector3D(const Vector3D &vector) :
 {
 }
 
+Math::Vector3D::Vector3D(const Point3D &point) :
+    _x(point._x),
+    _y(point._y),
+    _z(point._z)
+{
+}
+
 double Math::Vector3D::length() const
 {
     double pow_x = std::pow(_x, 2);
@@ -38,6 +46,14 @@ double Math::Vector3D::length() const
     double length = std::sqrt(pow_x+ pow_y + pow_z);
 
     return length;
+}
+
+void Math::Vector3D::normalize()
+{
+    double length = this->length();
+    _x /= length;
+    _y /= length;
+    _z /= length;
 }
 
 double Math::Vector3D::dot(const Vector3D &vec) const
@@ -61,6 +77,13 @@ Math::Vector3D &Math::Vector3D::operator=(const Vector3D &vec)
     _z = vec._z;
     return *this;
 }
+
+Math::Vector3D &Math::Vector3D::operator=(const Point3D &point)
+{
+    _x = point._x;
+    _y = point._y;
+    _z = point._z;
+    return *this;}
 
 Math::Vector3D Math::Vector3D::operator+(const Vector3D &vec) const
 {
