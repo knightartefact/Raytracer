@@ -4,3 +4,4 @@
 models
 raytracer
 *.ppm
+*.png

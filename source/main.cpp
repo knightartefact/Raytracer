@@ -10,18 +10,22 @@
 #include "Ray.hpp"
 #include "Sphere.hpp"
 #include "Camera.hpp"
+#include "World.hpp"
 
 int main(int ac, char **av)
 {
-    int width = 600;
-    int height = 600;
-    RayTracer::Camera cam(Math::Point3D(0, 6, 5), std::atoi(av[1]));
-    RayTracer::Sphere sphere(Math::Point3D(-4, 7, -10), 3, RayTracer::Color(0.5, 0.5 ,0.5));
-    RayTracer::Sphere sphere2(Math::Point3D(-2, 1, -20), 3, RayTracer::Color(0.8, 0.3 ,0.9));
+    int width = 2000;
+    int height = 2000;
 
-    Math::Vector3D directionalLight(0, -1, 2);
-    double lightIntensity = 0.9;
-    double ambientLight = 0.6;
+    RayTracer::Camera cam(Math::Point3D(0, 0, 5), std::atoi(av[1]));
+    RayTracer::World world(Math::Vector3D(1,  -1, 0), 0.9);
+
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(0, 0, -20), 5, RayTracer::Color(0.5, 0.5 ,0.5)));
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(10, 0, -10), 5, RayTracer::Color(0.2, 0.8 ,0.8)));
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(-20, 5, -50), 8, RayTracer::Color(0.7, 0.4 ,0.3)));
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(-10, 0, -20), 10, RayTracer::Color(0.2, 0.6 ,0.2)));
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(30, -20, -100), 60, RayTracer::Color(0.1, 0.2 ,0.2)));
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(0, 200, 0), 200, RayTracer::Color(0.8, 0.3 ,0.9)));
 
     if (ac == 2) {
         std::string help_checker = av[1];
@@ -39,20 +43,19 @@ int main(int ac, char **av)
 
             RayTracer::Ray ray = cam.ray(u, v);
             double solution;
-            if ((solution = sphere.hit(ray)) > 0) {
-                Math::Vector3D normal = Math::Vector3D::normalize(sphere.normal(ray.at(solution)));
-                double lightAngle = (normal.dot(directionalLight) + 1) / 2.0;
-                RayTracer::Color angleColor(lightAngle, lightAngle, lightAngle);
-                std::cerr << "Light angle: " << lightAngle << std::endl;
-                angleColor *= sphere.color() * ((lightIntensity + ambientLight) / 2) ;
-                angleColor.write();
-            } else if ((solution = sphere2.hit(ray)) > 0) {
-                Math::Vector3D normal = Math::Vector3D::normalize(sphere2.normal(ray.at(solution)));
-                double lightAngle = (normal.dot(directionalLight) + 1) / 2.0;
-                RayTracer::Color angleColor(lightAngle, lightAngle, lightAngle);
-                angleColor *= sphere2.color() * ((lightIntensity + ambientLight) / 2) ;
-                angleColor.write();
-            } else {
+            bool hit = false;
+            for (auto &object : world.objects()) {
+                if ((solution = object->hit(ray)) > 0) {
+                    hit = true;
+                    Math::Vector3D normal = Math::Vector3D::normalize(object->normal(ray.at(solution)));
+                    double lightAngle = (normal.dot(world.dLightDirection()) + 1) / 2.0;
+                    RayTracer::Color angleColor(lightAngle, lightAngle, lightAngle);
+                    angleColor *= object->color() * ((world.dLightIntensity() + world.aLightIntensity()) / 2) ;
+                    angleColor.write();
+                    break;
+                }
+            }
+            if (!hit) {
                 RayTracer::Color sky(0 ,0 ,0);
                 sky.write();
             }

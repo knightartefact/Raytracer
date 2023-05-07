@@ -20,6 +20,7 @@ SRC	=	source/main.cpp\
 		source/Primitives/Rectangle3D.cpp\
 		source/Primitives/APrimitive.cpp\
 		source/Camera.cpp\
+		source/World.cpp\
 		source/Utils/Color.cpp\
 
 OBJ	=	$(SRC:%.cpp=%.o)

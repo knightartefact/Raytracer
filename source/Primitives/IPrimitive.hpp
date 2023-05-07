@@ -9,6 +9,7 @@
 #define IPRIMITIVE_HPP_
 #include "Point3D.hpp"
 #include "Vector3D.hpp"
+#include "Color.hpp"
 
 namespace RayTracer
 {
@@ -21,6 +22,7 @@ namespace RayTracer
             virtual double hit(const RayTracer::Ray &ray) const = 0;
             virtual Math::Vector3D normal(const Math::Point3D &point) const = 0;
             virtual Math::Point3D position() const = 0;
+            virtual Color color() const = 0;
     };
 }
 

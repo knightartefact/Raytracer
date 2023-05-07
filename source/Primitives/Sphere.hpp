@@ -25,9 +25,9 @@ namespace RayTracer
 
             double hit(const Ray &ray) const override;
             Math::Vector3D normal(const Math::Point3D &point) const override;
+            Color color() const override;
 
             double radius() const;
-            Color color() const;
 
         private:
             double _radius;
