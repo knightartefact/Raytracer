@@ -24,13 +24,14 @@ namespace Math
             ~Vector3D() = default;
 
             double length() const;
+            static Math::Vector3D normalize(const Math::Vector3D &vec);
             void normalize();
+
             double dot(const Vector3D &vec) const;
             double dot(const Point3D &point) const;
 
             Math::Vector3D &operator=(const Vector3D &vec);
             Math::Vector3D &operator=(const Point3D &point);
-
             Math::Vector3D operator+(const Vector3D &vec) const;
             Math::Vector3D operator-(const Vector3D &vec) const;
             Math::Vector3D operator*(const Vector3D &vec) const;

@@ -21,9 +21,13 @@ RayTracer::Rectangle3D::Rectangle3D(const Rectangle3D &rect) :
 {
 }
 
-RayTracer::Rectangle3D RayTracer::Rectangle3D::operator=(const Rectangle3D &rect) const
+RayTracer::Rectangle3D &RayTracer::Rectangle3D::operator=(const Rectangle3D &rect)
 {
-    return Rectangle3D(rect);
+    _origin = rect._origin;
+    _bottom = rect._bottom;
+    _left = rect._left;
+
+    return *this;
 }
 
 RayTracer::Rectangle3D &RayTracer::Rectangle3D::operator=(Rectangle3D &&rect)

@@ -48,6 +48,7 @@ RayTracer::Color &RayTracer::Color::operator=(const Color &color)
     _r = color._r;
     _g = color._g;
     _b = color._b;
+
     return *this;
 }
 

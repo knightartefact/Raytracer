@@ -23,9 +23,15 @@ RayTracer::Ray::Ray(Ray &ray) :
 {
 }
 
-RayTracer::Ray RayTracer::Ray::operator=(const Ray &ray)
+RayTracer::Ray &RayTracer::Ray::operator=(const Ray &ray)
 {
-    Ray newRay(ray._origin, ray._direction);
+    _origin = ray._origin;
+    _direction = ray._direction;
 
-    return newRay;
+    return *this;
+}
+
+Math::Point3D RayTracer::Ray::at(double k) const
+{
+    return (_origin + _direction * k);
 }

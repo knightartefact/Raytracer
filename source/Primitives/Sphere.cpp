@@ -18,13 +18,18 @@ RayTracer::Sphere::Sphere(const Math::Point3D &center, double radius, const Colo
 
 RayTracer::Sphere::Sphere(const Sphere &sphere) :
     _center(sphere._center),
-    _radius(sphere._radius)
+    _radius(sphere._radius),
+    _color(sphere._color)
 {
 }
 
-RayTracer::Sphere RayTracer::Sphere::operator=(const Sphere &sphere) const
+RayTracer::Sphere &RayTracer::Sphere::operator=(const Sphere &sphere)
 {
-    return Sphere(sphere);
+    _radius = sphere._radius;
+    _center = sphere._center;
+    _color = sphere._color;
+
+    return *this;
 }
 
 double RayTracer::Sphere::hits(const RayTracer::Ray &ray)

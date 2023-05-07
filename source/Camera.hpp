@@ -20,7 +20,7 @@ namespace RayTracer
             Camera(const Camera &camera);
             ~Camera() = default;
 
-            Camera operator=(const Camera &camera) const;
+            Camera &operator=(const Camera &camera);
 
             Ray ray(double u, double v) const;
 
@@ -28,7 +28,7 @@ namespace RayTracer
             Rectangle3D _screen;
             Math::Point3D _position;
             Math::Vector3D _direction;
-            int _fov;
+            double _fov;
     };
 }
 

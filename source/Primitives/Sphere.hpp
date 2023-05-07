@@ -20,7 +20,7 @@ namespace RayTracer
             Sphere(const Sphere &sphere);
             ~Sphere() = default;
 
-            Sphere operator=(const Sphere &sphere) const;
+            Sphere &operator=(const Sphere &sphere);
 
             double hits(const Ray &ray);
             Math::Vector3D normal(const Math::Point3D &point) const;

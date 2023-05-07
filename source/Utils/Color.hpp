@@ -18,7 +18,6 @@ namespace RayTracer
             Color(Color &&color) = default;
             ~Color() = default;
 
-
             int r() const;
             int g() const;
             int b() const;

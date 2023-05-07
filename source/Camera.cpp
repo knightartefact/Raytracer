@@ -13,14 +13,11 @@ RayTracer::Camera::Camera(const Math::Point3D &position, int fov) :
     _screen(Rectangle3D(Math::Point3D(0, 0, 0))),
     _position(position),
     _direction(Math::Vector3D(0, 0, -1)),
-    _fov(fov)
+    _fov(fov * (M_PI / 180))
 {
-    double radianFov = fov * (M_PI / 180);
-    double screen_distance =  1 /  (2 * std::tan(radianFov / 2.0));
-    Math::Vector3D screenPosVector(position._x - 0.5, position._y - 0.5, position._z - screen_distance);
-    Math::Point3D screenOrigin = Math::Point3D(screenPosVector);
+    double screen_distance =  1 /  (2 * std::tan(_fov / 2.0));
+    Math::Point3D screenOrigin(position._x - 0.5, position._y - 0.5, position._z - screen_distance);
 
-    std::cerr << "Screen vector: " << screenPosVector << std::endl;
     _screen = Rectangle3D(screenOrigin);
 }
 
@@ -32,9 +29,14 @@ RayTracer::Camera::Camera(const Camera &camera) :
 {
 }
 
-RayTracer::Camera RayTracer::Camera::operator=(const Camera &camera) const
+RayTracer::Camera &RayTracer::Camera::operator=(const Camera &camera)
 {
-    return Camera(camera);
+    _screen = camera._screen;
+    _position = camera._position;
+    _direction = camera._direction;
+    _fov = camera._fov;
+
+    return *this;
 }
 
 RayTracer::Ray RayTracer::Camera::ray(double u, double v) const

@@ -20,11 +20,9 @@ namespace RayTracer
             Ray(Ray &&ray) = default;
             ~Ray() = default;
 
-            Ray operator=(const Ray &ray);
+            Ray &operator=(const Ray &ray);
 
-            Math::Point3D at(double k) {
-                return (_origin + _direction * k);
-            }
+            Math::Point3D at(double k) const;
 
         public:
             Math::Point3D _origin;

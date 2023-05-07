@@ -51,9 +51,18 @@ double Math::Vector3D::length() const
 void Math::Vector3D::normalize()
 {
     double length = this->length();
+
     _x /= length;
     _y /= length;
     _z /= length;
+}
+
+Math::Vector3D Math::Vector3D::normalize(const Math::Vector3D &vec)
+{
+    double length = vec.length();
+    Math::Vector3D normalized(vec._x / length, vec._y / length, vec._z / length);
+
+    return normalized;
 }
 
 double Math::Vector3D::dot(const Vector3D &vec) const
