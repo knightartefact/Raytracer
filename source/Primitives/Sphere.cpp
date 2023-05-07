@@ -10,14 +10,14 @@
 #include <cmath>
 
 RayTracer::Sphere::Sphere(const Math::Point3D &center, double radius, const Color &color) :
-    _center(center),
+    APrimitive(center),
     _radius(radius),
     _color(color)
 {
 }
 
 RayTracer::Sphere::Sphere(const Sphere &sphere) :
-    _center(sphere._center),
+    APrimitive(sphere._position),
     _radius(sphere._radius),
     _color(sphere._color)
 {
@@ -26,15 +26,15 @@ RayTracer::Sphere::Sphere(const Sphere &sphere) :
 RayTracer::Sphere &RayTracer::Sphere::operator=(const Sphere &sphere)
 {
     _radius = sphere._radius;
-    _center = sphere._center;
+    _position = sphere._position;
     _color = sphere._color;
 
     return *this;
 }
 
-double RayTracer::Sphere::hits(const RayTracer::Ray &ray)
+double RayTracer::Sphere::hit(const RayTracer::Ray &ray) const
 {
-    Math::Point3D oc = ray._origin - _center;
+    Math::Point3D oc = ray._origin - _position;
 
     double a =  ray._direction.dot(ray._direction);
     double b = 2.0 * ray._direction.dot(oc);
@@ -52,7 +52,12 @@ double RayTracer::Sphere::hits(const RayTracer::Ray &ray)
 
 Math::Vector3D RayTracer::Sphere::normal(const Math::Point3D &point) const
 {
-    Math::Vector3D normal(point - _center);
+    Math::Vector3D normal(point - _position);
 
     return normal;
+}
+
+double RayTracer::Sphere::radius() const
+{
+    return _radius;
 }

@@ -18,6 +18,7 @@ SRC	=	source/main.cpp\
 		source/Maths/Vector3D.cpp\
 		source/Maths/Point3D.cpp\
 		source/Primitives/Rectangle3D.cpp\
+		source/Primitives/APrimitive.cpp\
 		source/Camera.cpp\
 		source/Utils/Color.cpp\
 

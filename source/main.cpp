@@ -13,11 +13,11 @@
 
 int main(int ac, char **av)
 {
-    int width = 1024;
-    int height = 1024;
+    int width = 2048;
+    int height = 2048;
     RayTracer::Camera cam(Math::Point3D(0, 6, 5), std::atoi(av[1]));
     RayTracer::Sphere sphere(Math::Point3D(-4, 7, -10), 3, RayTracer::Color(0.5, 0.5 ,0.5));
-    RayTracer::Sphere sphere2(Math::Point3D(-2, 5, -20), 3, RayTracer::Color(0.5, 0.5 ,0.5));
+    RayTracer::Sphere sphere2(Math::Point3D(-2, 1, -20), 3, RayTracer::Color(0.8, 0.3 ,0.9));
 
     if (ac == 2) {
         std::string help_checker = av[1];
@@ -36,18 +36,20 @@ int main(int ac, char **av)
             RayTracer::Ray ray = cam.ray(u, v);
             int r, g, b;
             double solution;
-            if ((solution = sphere.hits(ray)) > 0) {
+            if ((solution = sphere.hit(ray)) > 0) {
                 Math::Vector3D normal = Math::Vector3D::normalize(sphere.normal(ray.at(solution)));
                 RayTracer::Color color(normal._x, normal._y, normal._z);
                 r = color.r();
                 g = color.g();
                 b = color.b();
-            } else if ((solution = sphere2.hits(ray)) > 0) {
+            } else if ((solution = sphere2.hit(ray)) > 0) {
                 Math::Vector3D normal = Math::Vector3D::normalize(sphere2.normal(ray.at(solution)));
                 RayTracer::Color color(normal._x, normal._y, normal._z);
-                r = color.r();
-                g = color.g();
-                b = color.b();
+                r = 0;
+                g = 0;
+                Math::Vector3D length = ray.at(solution);
+                b = std::abs(255 - ((solution + sphere2.position()._z / 3  )) * 255);
+                std::cerr << "solution: " << solution << std::endl;
             } else {
                 r = 0xAD;
                 g = 0xD8;

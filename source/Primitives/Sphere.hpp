@@ -9,12 +9,13 @@
 #define SPHERE_HPP_
 #include "Point3D.hpp"
 #include "Color.hpp"
+#include "APrimitive.hpp"
 
 namespace RayTracer
 {
     class Ray;
 
-    class Sphere {
+    class Sphere : public APrimitive {
         public:
             Sphere(const Math::Point3D &center, double radius, const Color &color);
             Sphere(const Sphere &sphere);
@@ -22,11 +23,12 @@ namespace RayTracer
 
             Sphere &operator=(const Sphere &sphere);
 
-            double hits(const Ray &ray);
-            Math::Vector3D normal(const Math::Point3D &point) const;
+            double hit(const Ray &ray) const override;
+            Math::Vector3D normal(const Math::Point3D &point) const override;
 
-        public:
-            Math::Point3D _center;
+            double radius() const;
+
+        private:
             double _radius;
             Color _color;
     };

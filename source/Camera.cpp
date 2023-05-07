@@ -12,7 +12,7 @@
 RayTracer::Camera::Camera(const Math::Point3D &position, int fov) :
     _screen(Rectangle3D(Math::Point3D(0, 0, 0))),
     _position(position),
-    _direction(Math::Vector3D(0, 0, -1)),
+    _direction(Math::Vector3D(0, 0, 1)),
     _fov(fov * (M_PI / 180))
 {
     double screen_distance =  1 /  (2 * std::tan(_fov / 2.0));
