@@ -13,11 +13,15 @@
 
 int main(int ac, char **av)
 {
-    int width = 2048;
-    int height = 2048;
+    int width = 600;
+    int height = 600;
     RayTracer::Camera cam(Math::Point3D(0, 6, 5), std::atoi(av[1]));
     RayTracer::Sphere sphere(Math::Point3D(-4, 7, -10), 3, RayTracer::Color(0.5, 0.5 ,0.5));
     RayTracer::Sphere sphere2(Math::Point3D(-2, 1, -20), 3, RayTracer::Color(0.8, 0.3 ,0.9));
+
+    Math::Vector3D directionalLight(0, -1, 2);
+    double lightIntensity = 0.9;
+    double ambientLight = 0.6;
 
     if (ac == 2) {
         std::string help_checker = av[1];
@@ -34,28 +38,24 @@ int main(int ac, char **av)
             double v = (float)y / height;
 
             RayTracer::Ray ray = cam.ray(u, v);
-            int r, g, b;
             double solution;
             if ((solution = sphere.hit(ray)) > 0) {
                 Math::Vector3D normal = Math::Vector3D::normalize(sphere.normal(ray.at(solution)));
-                RayTracer::Color color(normal._x, normal._y, normal._z);
-                r = color.r();
-                g = color.g();
-                b = color.b();
+                double lightAngle = (normal.dot(directionalLight) + 1) / 2.0;
+                RayTracer::Color angleColor(lightAngle, lightAngle, lightAngle);
+                std::cerr << "Light angle: " << lightAngle << std::endl;
+                angleColor *= sphere.color() * ((lightIntensity + ambientLight) / 2) ;
+                angleColor.write();
             } else if ((solution = sphere2.hit(ray)) > 0) {
                 Math::Vector3D normal = Math::Vector3D::normalize(sphere2.normal(ray.at(solution)));
-                RayTracer::Color color(normal._x, normal._y, normal._z);
-                r = 0;
-                g = 0;
-                Math::Vector3D length = ray.at(solution);
-                b = std::abs(255 - ((solution + sphere2.position()._z / 3  )) * 255);
-                std::cerr << "solution: " << solution << std::endl;
+                double lightAngle = (normal.dot(directionalLight) + 1) / 2.0;
+                RayTracer::Color angleColor(lightAngle, lightAngle, lightAngle);
+                angleColor *= sphere2.color() * ((lightIntensity + ambientLight) / 2) ;
+                angleColor.write();
             } else {
-                r = 0xAD;
-                g = 0xD8;
-                b = 0xE6;
+                RayTracer::Color sky(0 ,0 ,0);
+                sky.write();
             }
-            std::cout << r << " " << g << " " << b << std::endl;
         }
     }
     return 0;

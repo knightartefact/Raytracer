@@ -61,3 +61,8 @@ double RayTracer::Sphere::radius() const
 {
     return _radius;
 }
+
+RayTracer::Color RayTracer::Sphere::color() const
+{
+    return _color;
+}
