@@ -5,6 +5,7 @@
 ** Color
 */
 
+#include <iostream>
 #include "Color.hpp"
 
 RayTracer::Color::Color() :
@@ -43,12 +44,43 @@ int RayTracer::Color::b() const
     return _b * 255;
 }
 
+void RayTracer::Color::write() const
+{
+    std::cout << r() << " " << g() << " " << b() << std::endl;
+}
+
 RayTracer::Color &RayTracer::Color::operator=(const Color &color)
 {
     _r = color._r;
     _g = color._g;
     _b = color._b;
 
+    return *this;
+}
+
+RayTracer::Color RayTracer::Color::operator*(const Color &color) const
+{
+    Color newColor;
+
+    newColor._r = _r * color._r;
+    newColor._g = _g * color._g;
+    newColor._b = _b * color._b;
+    return newColor;
+}
+
+RayTracer::Color RayTracer::Color::operator*(double factor) const
+{
+    Color newColor;
+
+    newColor._r = _r * factor;
+    newColor._g = _g * factor;
+    newColor._b = _b * factor;
+    return newColor;
+}
+
+RayTracer::Color &RayTracer::Color::operator*=(const Color &color)
+{
+    *this = *this *color;
     return *this;
 }
 

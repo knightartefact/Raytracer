@@ -22,8 +22,14 @@ namespace RayTracer
             int g() const;
             int b() const;
 
+            void write() const;
+
             Color &operator=(const Color &color);
             Color &operator=(Color &&color) = default;
+
+            Color operator*(const Color &color) const;
+            Color operator*(double factor) const;
+            Color &operator*=(const Color& color);
 
         private:
             double clamp(double val, double min, double max) const;
