@@ -78,9 +78,31 @@ RayTracer::Color RayTracer::Color::operator*(double factor) const
     return newColor;
 }
 
+RayTracer::Color RayTracer::Color::operator/(double factor) const
+{
+    return Color(_r / factor, _g / factor, _b / factor);
+}
+
 RayTracer::Color &RayTracer::Color::operator*=(const Color &color)
 {
     *this = *this *color;
+    return *this;
+}
+
+RayTracer::Color RayTracer::Color::operator+(const Color &color) const
+{
+    Color newColor;
+
+    newColor._r = _r + color._r;
+    newColor._g = _g + color._g;
+    newColor._b = _b + color._b;
+    return newColor;
+}
+
+RayTracer::Color &RayTracer::Color::operator+=(const Color &color)
+{
+    *this = *this + color;
+
     return *this;
 }
 

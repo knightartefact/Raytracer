@@ -29,7 +29,10 @@ namespace RayTracer
 
             Color operator*(const Color &color) const;
             Color operator*(double factor) const;
+            Color operator/(double factor) const;
             Color &operator*=(const Color& color);
+            Color operator+(const Color &color) const;
+            Color &operator+=(const Color &color);
 
         private:
             double clamp(double val, double min, double max) const;

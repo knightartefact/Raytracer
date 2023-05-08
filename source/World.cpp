@@ -24,6 +24,7 @@ RayTracer::World::World(const Math::Vector3D &lightDirection, double lightIntens
     _directionalLightIntensity(lightIntensity),
     _ambientLightIntensity(0.4)
 {
+    _directionalLightVector.normalize();
 }
 
 RayTracer::World::World(const World &world) :
