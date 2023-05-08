@@ -5,6 +5,7 @@
 ** World
 */
 
+#include <limits>
 #include "World.hpp"
 #include "IPrimitive.hpp"
 #include "Ray.hpp"
@@ -53,21 +54,21 @@ Math::Vector3D RayTracer::World::dLightDirection() const
     return _directionalLightVector;
 }
 
-double RayTracer::World::hit(const Ray &ray)
+RayTracer::ObjectHit RayTracer::World::hit(const Ray &ray) const
 {
     double solution = 0.0;
+    ObjectHit hit = {nullptr, Math::Vector3D(), std::numeric_limits<double>::infinity()};
 
     for (auto &object : _objects) {
         if ((solution = object->hit(ray)) > 0) {
-            Math::Vector3D normal = Math::Vector3D::normalize(object->normal(ray.at(solution)));
-            double lightAngle = (normal.dot(dLightDirection()) + 1) / 2.0;
-            RayTracer::Color angleColor(lightAngle, lightAngle, lightAngle);
-            angleColor *= object->color() * ((dLightIntensity() + aLightIntensity()) / 2) ;
-            angleColor.write();
-            break;
+            if (solution < hit.cSolution) {
+                hit.cSolution = solution;
+                hit.surfaceNormal = Math::Vector3D::normalize(object->normal(ray.at(solution)));
+                hit.object = object;
+            }
         }
     }
-    return -1.0;
+    return hit;
 }
 
 double RayTracer::World::dLightIntensity() const

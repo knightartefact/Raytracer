@@ -16,6 +16,12 @@ namespace RayTracer
 {
     class Ray;
 
+    struct ObjectHit {
+        std::shared_ptr<RayTracer::IPrimitive> object;
+        Math::Vector3D surfaceNormal;
+        double cSolution;
+    };
+
     class World {
         public:
             World();
@@ -30,7 +36,7 @@ namespace RayTracer
             double dLightIntensity() const;
             Math::Vector3D dLightDirection() const;
 
-            double hit(const Ray &ray);
+            ObjectHit hit(const Ray &ray) const;
 
         private:
             std::vector<std::shared_ptr<IPrimitive>> _objects;
