@@ -15,12 +15,13 @@
 int main(int ac, char **av)
 {
     int width = 2000;
-    int height = 2000;
+    int height = 500;
 
-    RayTracer::Camera cam(Math::Point3D(0, 0, 5), std::atoi(av[1]));
+    RayTracer::Camera cam(Math::Point3D(0, 0, 5), ((float)width / (float)height), std::atoi(av[1]));
     RayTracer::World world(Math::Vector3D(1,  -1, 0), 0.9);
 
-    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(0, 0, -20), 5, RayTracer::Color(0.5, 0.5 ,0.5)));
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(2, 3, -10), 2, RayTracer::Color(0.5, 0.5 ,0.5)));
+    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(0, 0, -20), 5, RayTracer::Color(0.9, 0.2 ,0.5)));
     world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(10, 0, -10), 5, RayTracer::Color(0.2, 0.8 ,0.8)));
     world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(-20, 5, -50), 8, RayTracer::Color(0.7, 0.4 ,0.3)));
     world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(-10, 0, -20), 10, RayTracer::Color(0.2, 0.6 ,0.2)));

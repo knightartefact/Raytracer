@@ -14,6 +14,8 @@
 
 namespace RayTracer
 {
+    class Ray;
+
     class World {
         public:
             World();
@@ -27,6 +29,8 @@ namespace RayTracer
             double aLightIntensity() const;
             double dLightIntensity() const;
             Math::Vector3D dLightDirection() const;
+
+            double hit(const Ray &ray);
 
         private:
             std::vector<std::shared_ptr<IPrimitive>> _objects;

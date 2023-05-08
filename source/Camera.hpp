@@ -16,7 +16,7 @@ namespace RayTracer
 {
     class Camera {
         public:
-            Camera(const Math::Point3D &position, int fov);
+            Camera(const Math::Point3D &position, double aRatio, int fov);
             Camera(const Camera &camera);
             ~Camera() = default;
 
@@ -29,6 +29,7 @@ namespace RayTracer
             Math::Point3D _position;
             Math::Vector3D _direction;
             double _fov;
+            double _aspectRatio;
     };
 }
 
