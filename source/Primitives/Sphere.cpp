@@ -45,7 +45,6 @@ double RayTracer::Sphere::hit(const RayTracer::Ray &ray) const
     if (discriminant < 0) {
         return -1.0;
     }
-
     solution = (-b - std::sqrt(discriminant)) / (2 * a);
     return solution;
 }
