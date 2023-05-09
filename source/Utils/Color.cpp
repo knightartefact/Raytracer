@@ -44,6 +44,13 @@ int RayTracer::Color::b() const
     return _b * 255;
 }
 
+void RayTracer::Color::clip()
+{
+    _r = clamp(_r, 0, 1);
+    _g = clamp(_g, 0, 1);
+    _b = clamp(_b, 0, 1);
+}
+
 void RayTracer::Color::write() const
 {
     std::cout << r() << " " << g() << " " << b() << std::endl;
@@ -97,6 +104,23 @@ RayTracer::Color RayTracer::Color::operator+(const Color &color) const
     newColor._g = _g + color._g;
     newColor._b = _b + color._b;
     return newColor;
+}
+
+RayTracer::Color RayTracer::Color::operator+(double factor) const
+{
+    Color color;
+
+    color._r = _r + factor;
+    color._g = _g + factor;
+    color._b = _b + factor;
+    return color;
+}
+
+RayTracer::Color &RayTracer::Color::operator+=(double factor)
+{
+    *this = *this + factor;
+
+    return *this;
 }
 
 RayTracer::Color &RayTracer::Color::operator+=(const Color &color)

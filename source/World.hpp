@@ -19,6 +19,7 @@ namespace RayTracer
     struct ObjectHit {
         std::shared_ptr<RayTracer::IPrimitive> object;
         Math::Vector3D surfaceNormal;
+        Math::Point3D surfacePoint;
         double cSolution;
     };
 

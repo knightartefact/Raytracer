@@ -21,8 +21,9 @@ namespace RayTracer
             void render(const World &world, const Camera &camera) const;
 
         private:
-            Color rayColor(const Ray &ray, const World &world) const;
-
+            Color traceRay(const Ray &ray, const World &world) const;
+            Color shade(const ObjectHit &hit, const World &world) const;
+            Color shadowAttenuation(const ObjectHit &hit, const World &world) const;
     };
 }
 

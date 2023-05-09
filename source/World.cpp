@@ -58,13 +58,14 @@ Math::Vector3D RayTracer::World::dLightDirection() const
 RayTracer::ObjectHit RayTracer::World::hit(const Ray &ray) const
 {
     double solution = 0.0;
-    ObjectHit hit = {nullptr, Math::Vector3D(), std::numeric_limits<double>::infinity()};
+    ObjectHit hit = {nullptr, Math::Vector3D(), Math::Point3D(), std::numeric_limits<double>::infinity()};
 
     for (auto &object : _objects) {
         if ((solution = object->hit(ray)) > 0) {
             if (solution < hit.cSolution) {
                 hit.cSolution = solution;
-                hit.surfaceNormal = Math::Vector3D::normalize(object->normal(ray.at(solution)));
+                hit.surfacePoint = ray.at(solution);
+                hit.surfaceNormal = Math::Vector3D::normalize(object->normal(hit.surfacePoint));
                 hit.object = object;
             }
         }

@@ -28,7 +28,7 @@ void RayTracer::Renderer::render(const World &world, const Camera &camera) const
                 double u = ((float)x + random_double()) / res.width;
                 double v = ((float)y + random_double()) / res.height;
                 RayTracer::Ray ray = camera.ray(u, v);
-                color += rayColor(ray, world);
+                color += traceRay(ray, world);
             }
             color = color / samplesPerPixel;
             color.write();
@@ -36,27 +36,41 @@ void RayTracer::Renderer::render(const World &world, const Camera &camera) const
     }
 }
 
-RayTracer::Color RayTracer::Renderer::rayColor(const Ray &ray, const World &world) const
+RayTracer::Color RayTracer::Renderer::traceRay(const Ray &ray, const World &world) const
 {
-    RayTracer::ObjectHit hit;
-    RayTracer::Color finalColor;
-    RayTracer::Ray currentRay = ray;
-    int maxBounces = 3;
-    float coefficient = 1.0;
-    float bias = 0.0001;
+    RayTracer::ObjectHit hit = world.hit(ray);
 
-    for (int bounce = 0; bounce < maxBounces; bounce++) {
-        hit = world.hit(currentRay);
-        if (hit.cSolution == std::numeric_limits<double>::infinity()) {
-            finalColor += Color() * coefficient;
-            break;
-        }
-        float lightAngle = std::max<float>(hit.surfaceNormal.dot(-world.dLightDirection()), 0.0);
-        finalColor += hit.object->color() * lightAngle * coefficient;
-        coefficient *= 0.8;
-
-        currentRay._origin = currentRay.at(hit.cSolution) + Math::Point3D(hit.surfaceNormal * bias);
-        currentRay._direction = Math::Vector3D::normalize(hit.surfaceNormal);
+    if (hit.cSolution == std::numeric_limits<double>::infinity()) {
+        return Color(0.0, 0.0, 0.0);
     }
-    return finalColor;
+    return shade(hit, world);
+}
+
+RayTracer::Color RayTracer::Renderer::shade(const ObjectHit &hit, const World &world) const
+{
+    Color intensity = hit.object->color() * world.aLightIntensity();
+
+    // Here we should compute the light attenuation factor depending on the
+    // distance between the light and the objects surface.
+    float lightAngle = hit.surfaceNormal.dot(-world.dLightDirection());
+    Color attenuation;
+
+    if (lightAngle > 0) {
+        attenuation = shadowAttenuation(hit, world);
+        intensity += attenuation * lightAngle * world.dLightIntensity();
+    }
+    return intensity;
+}
+
+RayTracer::Color RayTracer::Renderer::shadowAttenuation(const ObjectHit &hit, const World &world) const
+{
+    float bias = 0.0001f;
+    Math::Vector3D sDirection = -world.dLightDirection();
+    RayTracer::Ray shadowRay(hit.surfacePoint + (sDirection * bias), sDirection);
+    ObjectHit shadowHit = world.hit(shadowRay);
+
+    if (shadowHit.cSolution == std::numeric_limits<double>::infinity()) {
+        return Color(0, 0, 0);
+    }
+    return Color(1, 1, 1);
 }
