@@ -45,6 +45,8 @@ namespace RayTracer
 
             Camera &operator=(const Camera &camera);
 
+            ImageRes resolution() const;
+
             Ray ray(double u, double v) const;
 
         private:

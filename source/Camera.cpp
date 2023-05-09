@@ -89,6 +89,11 @@ RayTracer::Camera &RayTracer::Camera::operator=(const Camera &camera)
     return *this;
 }
 
+RayTracer::ImageRes RayTracer::Camera::resolution() const
+{
+    return _resolution;
+}
+
 RayTracer::Ray RayTracer::Camera::ray(double u, double v) const
 {
     Math::Point3D screenPos = _screen.pointAt(u, v);
