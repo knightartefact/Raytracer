@@ -7,6 +7,7 @@
 
 #ifndef POINT3D_HPP_
 #define POINT3D_HPP_
+#include <ostream>
 
 namespace Math
 {
@@ -29,6 +30,13 @@ namespace Math
             Point3D operator-(const Point3D &point) const;
             Point3D operator-(const Vector3D &vec) const;
             Point3D operator+(const Vector3D &vec) const;
+
+            friend std::ostream &operator<<(std::ostream &out, const Math::Point3D &point) {
+                out << "(" << point._x;
+                out << ", " << point._y;
+                out << ", " << point._z << ")";
+                return out;
+            }
 
         public:
             double _x;

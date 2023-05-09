@@ -94,6 +94,13 @@ Math::Vector3D &Math::Vector3D::operator=(const Point3D &point)
     _z = point._z;
     return *this;}
 
+Math::Vector3D &Math::Vector3D::operator-()
+{
+    *this = *this * -1.0;
+
+    return *this;
+}
+
 Math::Vector3D Math::Vector3D::operator+(const Vector3D &vec) const
 {
     Vector3D newVec(vec._x + _x, vec._y + _y, vec._z + _z);
