@@ -17,7 +17,7 @@ RayTracer::Ray::Ray(Math::Point3D origin, Math::Vector3D direction) :
 {
 }
 
-RayTracer::Ray::Ray(Ray &ray) :
+RayTracer::Ray::Ray(const Ray &ray) :
     _origin(ray._origin),
     _direction(ray._direction)
 {

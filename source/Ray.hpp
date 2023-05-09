@@ -16,7 +16,7 @@ namespace RayTracer
         public:
             Ray();
             Ray(Math::Point3D origin, Math::Vector3D direction);
-            Ray(Ray &ray);
+            Ray(const Ray &ray);
             Ray(Ray &&ray) = default;
             ~Ray() = default;
 

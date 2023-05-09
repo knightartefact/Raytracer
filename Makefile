@@ -13,11 +13,11 @@ SRC_DIRS	=	source\
 				source/Utils\
 
 SRC	=	source/main.cpp\
+		source/Renderer.cpp\
 		source/Primitives/Sphere.cpp\
 		source/Ray.cpp\
 		source/Maths/Vector3D.cpp\
 		source/Maths/Point3D.cpp\
-		source/Primitives/Rectangle3D.cpp\
 		source/Primitives/APrimitive.cpp\
 		source/Camera.cpp\
 		source/World.cpp\
