@@ -97,6 +97,8 @@ RayTracer::ImageRes RayTracer::Camera::resolution() const
 RayTracer::Ray RayTracer::Camera::ray(double u, double v) const
 {
     Math::Point3D screenPos = _screen.pointAt(u, v);
+    screenPos._x += _position._x;
+    screenPos._y += _position._y;
     Math::Vector3D direction = screenPos - _position;
     direction.normalize();
     Ray ray(_position, direction);
