@@ -16,7 +16,7 @@ namespace RayTracer
 
     class Plane : public APrimitive {
         public:
-            Plane(const Math::Vector3D &position, const Math::Vector3D &normal, const Color &color);
+            Plane(const Math::Point3D &position, const Math::Vector3D &normal, const Color &color);
             Plane(const Plane &plane);
             ~Plane() = default;
 

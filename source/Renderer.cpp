@@ -18,7 +18,7 @@ inline double random_double()
 void RayTracer::Renderer::render(const World &world, const Camera &camera) const
 {
     ImageRes res = camera.resolution();
-    int samplesPerPixel = 10;
+    int samplesPerPixel = 30;
 
     std::cout << "P3\n" << res.width << " " << res.height << "\n255" << std::endl;
     for (int y = 0; y < res.height; y++) {

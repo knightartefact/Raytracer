@@ -8,7 +8,7 @@
 #include "Plane.hpp"
 #include "Ray.hpp"
 
-RayTracer::Plane::Plane(const Math::Vector3D &position, const Math::Vector3D &normal, const Color &color) :
+RayTracer::Plane::Plane(const Math::Point3D &position, const Math::Vector3D &normal, const Color &color) :
     APrimitive(position),
     _normal(Math::Vector3D::normalize(normal)),
     _color(color)
@@ -35,7 +35,7 @@ double RayTracer::Plane::hit(const Ray &ray) const
 {
     double solution = -1.0f;
     double rayPlaneAngle = ray._direction.dot(_normal);
-    Math::Vector3D pointOnPlane;
+    Math::Point3D pointOnPlane;
 
     if (rayPlaneAngle == 0.0)
         return -1.0;
