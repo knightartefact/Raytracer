@@ -14,15 +14,15 @@ RayTracer::World::World() :
     _objects(0),
     _directionalLightVector(Math::Vector3D(0, 0, 0)),
     _directionalLightIntensity(0.7),
-    _ambientLightIntensity(0.4)
+    _ambientLightIntensity(0.2)
 {
 }
 
-RayTracer::World::World(const Math::Vector3D &lightDirection, double lightIntensity) :
+RayTracer::World::World(const Math::Vector3D &lightDirection, double lightIntensity, double ambientIntensity) :
     _objects(0),
     _directionalLightVector(lightDirection),
     _directionalLightIntensity(lightIntensity),
-    _ambientLightIntensity(0.4)
+    _ambientLightIntensity(ambientIntensity)
 {
     _directionalLightVector.normalize();
 }

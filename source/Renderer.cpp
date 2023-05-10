@@ -69,7 +69,7 @@ RayTracer::Color RayTracer::Renderer::shadowAttenuation(const ObjectHit &hit, co
     RayTracer::Ray shadowRay(hit.surfacePoint + (sDirection * bias), sDirection);
     ObjectHit shadowHit = world.hit(shadowRay);
 
-    if (shadowHit.cSolution == std::numeric_limits<double>::infinity()) {
+    if (shadowHit.cSolution != std::numeric_limits<double>::infinity()) {
         return Color(0, 0, 0);
     }
     return Color(1, 1, 1);

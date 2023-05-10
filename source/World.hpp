@@ -26,7 +26,7 @@ namespace RayTracer
     class World {
         public:
             World();
-            World(const Math::Vector3D &lightDirection, double lightIntensity);
+            World(const Math::Vector3D &lightDirection, double lightIntensity, double ambientIntensity);
             World(const World &World);
             ~World() = default;
 
