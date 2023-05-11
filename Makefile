@@ -11,18 +11,22 @@ SRC_DIRS	=	source\
 				source/Maths\
 				source/Primitives\
 				source/Utils\
+				source/Lights\
 
 SRC	=	source/main.cpp\
 		source/Renderer.cpp\
+		source/Ray.cpp\
+		source/Camera.cpp\
+		source/World.cpp\
 		source/Primitives/Sphere.cpp\
 		source/Primitives/Plane.cpp\
 		source/Primitives/APrimitive.cpp\
-		source/Ray.cpp\
 		source/Maths/Vector3D.cpp\
 		source/Maths/Point3D.cpp\
-		source/Camera.cpp\
-		source/World.cpp\
 		source/Utils/Color.cpp\
+		source/Lights/ALight.cpp\
+		source/Lights/DirectionalLight.cpp\
+		source/Lights/PointLight.cpp\
 
 OBJ	=	$(SRC:%.cpp=%.o)
 

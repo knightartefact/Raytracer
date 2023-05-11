@@ -101,6 +101,14 @@ Math::Vector3D &Math::Vector3D::operator-()
     return *this;
 }
 
+Math::Vector3D Math::Vector3D::operator-() const
+{
+    Math::Vector3D newVector;
+
+    newVector = *this * -1;
+    return newVector;
+}
+
 Math::Vector3D Math::Vector3D::operator+(const Vector3D &vec) const
 {
     Vector3D newVec(vec._x + _x, vec._y + _y, vec._z + _z);

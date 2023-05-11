@@ -33,6 +33,7 @@ namespace Math
             Math::Vector3D &operator=(const Vector3D &vec);
             Math::Vector3D &operator=(const Point3D &point);
             Math::Vector3D &operator-();
+            Math::Vector3D operator-() const;
 
             Math::Vector3D operator+(const Vector3D &vec) const;
             Math::Vector3D operator-(const Vector3D &vec) const;
