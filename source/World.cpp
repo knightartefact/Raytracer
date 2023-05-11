@@ -12,25 +12,21 @@
 
 RayTracer::World::World() :
     _objects(0),
-    _directionalLightVector(Math::Vector3D(0, 0, 0)),
-    _directionalLightIntensity(0.7),
+    _lights(0),
     _ambientLightIntensity(0.2)
 {
 }
 
-RayTracer::World::World(const Math::Vector3D &lightDirection, double lightIntensity, double ambientIntensity) :
+RayTracer::World::World(double ambientIntensity) :
     _objects(0),
-    _directionalLightVector(lightDirection),
-    _directionalLightIntensity(lightIntensity),
+    _lights(0),
     _ambientLightIntensity(ambientIntensity)
 {
-    _directionalLightVector.normalize();
 }
 
 RayTracer::World::World(const World &world) :
     _objects(world._objects),
-    _directionalLightVector(world._directionalLightVector),
-    _directionalLightIntensity(world._directionalLightIntensity),
+    _lights(world._lights),
     _ambientLightIntensity(world._ambientLightIntensity)
 {
 }
@@ -50,9 +46,14 @@ double RayTracer::World::aLightIntensity() const
     return _ambientLightIntensity;
 }
 
-Math::Vector3D RayTracer::World::dLightDirection() const
+void RayTracer::World::addLight(std::shared_ptr<ILight> light)
 {
-    return _directionalLightVector;
+    _lights.push_back(light);
+}
+
+std::vector<std::shared_ptr<RayTracer::ILight>> RayTracer::World::lights() const
+{
+    return _lights;
 }
 
 RayTracer::ObjectHit RayTracer::World::hit(const Ray &ray) const
@@ -71,9 +72,4 @@ RayTracer::ObjectHit RayTracer::World::hit(const Ray &ray) const
         }
     }
     return hit;
-}
-
-double RayTracer::World::dLightIntensity() const
-{
-    return _directionalLightIntensity;
 }

@@ -11,6 +11,7 @@
 #include <memory>
 #include "Vector3D.hpp"
 #include "IPrimitive.hpp"
+#include "ILight.hpp"
 
 namespace RayTracer
 {
@@ -26,7 +27,7 @@ namespace RayTracer
     class World {
         public:
             World();
-            World(const Math::Vector3D &lightDirection, double lightIntensity, double ambientIntensity);
+            World(double ambientIntensity);
             World(const World &World);
             ~World() = default;
 
@@ -34,15 +35,14 @@ namespace RayTracer
             std::vector<std::shared_ptr<IPrimitive>> objects() const;
 
             double aLightIntensity() const;
-            double dLightIntensity() const;
-            Math::Vector3D dLightDirection() const;
+            void addLight(std::shared_ptr<ILight> light);
+            std::vector<std::shared_ptr<ILight>> lights() const;
 
             ObjectHit hit(const Ray &ray) const;
 
         private:
             std::vector<std::shared_ptr<IPrimitive>> _objects;
-            Math::Vector3D _directionalLightVector;
-            double _directionalLightIntensity;
+            std::vector<std::shared_ptr<ILight>> _lights;
             double _ambientLightIntensity;
     };
 }
