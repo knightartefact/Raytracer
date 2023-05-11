@@ -35,7 +35,7 @@ RayTracer::Color RayTracer::PointLight::shadowAttenuation(const Math::Point3D &p
     if (shadowHit.cSolution != std::numeric_limits<double>::infinity()) {
         return Color(0, 0, 0);
     }
-    return Color(1, 1, 1);
+    return _color;
 }
 
 double RayTracer::PointLight::angleToNormal(const Math::Point3D &point, const Math::Vector3D &normal) const

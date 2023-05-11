@@ -35,18 +35,23 @@ double RayTracer::Plane::hit(const Ray &ray) const
 {
     double solution = -1.0f;
     double rayPlaneAngle = ray._direction.dot(_normal);
-    Math::Point3D pointOnPlane;
+    Math::Vector3D pointOnPlane;
 
-    if (rayPlaneAngle == 0.0)
-        return -1.0;
-    pointOnPlane = _position - ray._origin;
-    solution = pointOnPlane.dot(_normal) / rayPlaneAngle;
-    return solution;
+    if (rayPlaneAngle > 0.0) {
+        pointOnPlane = _position - ray._origin;
+        solution = pointOnPlane.dot(_normal) / rayPlaneAngle;
+        return solution;
+    }
+    if (rayPlaneAngle < 0.0) {
+        pointOnPlane = _position - ray._origin;
+        solution = pointOnPlane.dot(_normal) / rayPlaneAngle;
+        return -solution;
+    }
+    return -1.0;
 }
 
 Math::Vector3D RayTracer::Plane::normal(const Math::Point3D &point) const
 {
-    (void)point;
     return _normal;
 }
 
