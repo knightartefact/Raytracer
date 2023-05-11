@@ -58,7 +58,7 @@ RayTracer::Color RayTracer::Renderer::shade(const ObjectHit &hit, const World &w
         lightAngle = light->angleToNormal(hit.surfacePoint, hit.surfaceNormal);
         if (lightAngle > 0) {
             attenuation = light->shadowAttenuation(hit.surfacePoint, hit.surfaceNormal, world) * light->distanceAttenuation(hit.surfacePoint);
-            intensity += attenuation * light->intensity() * lightAngle;
+            intensity += attenuation * light->intensity() * lightAngle * hit.object->color();
         }
     }
     return intensity;
