@@ -23,7 +23,6 @@ namespace RayTracer
         private:
             Color traceRay(const Ray &ray, const World &world) const;
             Color shade(const ObjectHit &hit, const World &world) const;
-            Color shadowAttenuation(const ObjectHit &hit, const World &world) const;
     };
 }
 

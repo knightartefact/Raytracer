@@ -18,7 +18,7 @@ inline double random_double()
 void RayTracer::Renderer::render(const World &world, const Camera &camera) const
 {
     ImageRes res = camera.resolution();
-    int samplesPerPixel = 30;
+    int samplesPerPixel = 10;
 
     std::cout << "P3\n" << res.width << " " << res.height << "\n255" << std::endl;
     for (int y = 0; y < res.height; y++) {
@@ -51,28 +51,15 @@ RayTracer::Color RayTracer::Renderer::traceRay(const Ray &ray, const World &worl
 RayTracer::Color RayTracer::Renderer::shade(const ObjectHit &hit, const World &world) const
 {
     Color intensity = hit.object->color() * world.aLightIntensity();
-
-    // Here we should compute the light attenuation factor depending on the
-    // distance between the light and the objects surface.
-    float lightAngle = hit.surfaceNormal.dot(-world.dLightDirection());
     Color attenuation;
+    double lightAngle;
 
-    if (lightAngle > 0) {
-        attenuation = shadowAttenuation(hit, world);
-        intensity += attenuation * lightAngle * world.dLightIntensity();
+    for (auto &light : world.lights()) {
+        lightAngle = light->angleToNormal(hit.surfacePoint, hit.surfaceNormal);
+        if (lightAngle > 0) {
+            attenuation = light->shadowAttenuation(hit.surfacePoint, hit.surfaceNormal, world) * light->distanceAttenuation(hit.surfacePoint);
+            intensity += attenuation * light->intensity() * lightAngle;
+        }
     }
     return intensity;
-}
-
-RayTracer::Color RayTracer::Renderer::shadowAttenuation(const ObjectHit &hit, const World &world) const
-{
-    float bias = 0.0001f;
-    Math::Vector3D sDirection = -world.dLightDirection();
-    RayTracer::Ray shadowRay(hit.surfacePoint + (sDirection * bias), sDirection);
-    ObjectHit shadowHit = world.hit(shadowRay);
-
-    if (shadowHit.cSolution != std::numeric_limits<double>::infinity()) {
-        return Color(0, 0, 0);
-    }
-    return Color(1, 1, 1);
 }
