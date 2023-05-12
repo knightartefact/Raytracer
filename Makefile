@@ -12,6 +12,7 @@ SRC_DIRS	=	source\
 				source/Primitives\
 				source/Utils\
 				source/Lights\
+				source/Parsing\
 
 SRC	=	source/main.cpp\
 		source/Renderer.cpp\
@@ -27,10 +28,13 @@ SRC	=	source/main.cpp\
 		source/Lights/ALight.cpp\
 		source/Lights/DirectionalLight.cpp\
 		source/Lights/PointLight.cpp\
+		source/Parsing/Parsing.cpp\
 
 OBJ	=	$(SRC:%.cpp=%.o)
 
 EXEC	=	raytracer
+
+LDFLAGS	=	-lconfig++
 
 CPPFLAGS	=	-I source/libs/OBJLoader $(SRC_DIRS:%=-I%)
 
@@ -42,7 +46,7 @@ all: $(EXEC)
 	$(CXX) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 $(EXEC): OBJLoader $(OBJ)
-	$(CXX) -o $@ $(OBJ) $(CFLAGS)
+	$(CXX) -o $@ $(OBJ) $(CFLAGS) $(LDFLAGS)
 
 debug: CFLAGS += -g3
 debug: OBJLoader_debug maths_debug $(EXEC)
