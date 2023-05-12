@@ -35,17 +35,13 @@ double RayTracer::Plane::hit(const Ray &ray) const
 {
     double solution = -1.0f;
     double rayPlaneAngle = ray._direction.dot(_normal);
+    double epsilon = 1e-6;
     Math::Vector3D pointOnPlane;
 
-    if (rayPlaneAngle > 0.0) {
+    if (std::abs(rayPlaneAngle) > epsilon) {
         pointOnPlane = _position - ray._origin;
         solution = pointOnPlane.dot(_normal) / rayPlaneAngle;
         return solution;
-    }
-    if (rayPlaneAngle < 0.0) {
-        pointOnPlane = _position - ray._origin;
-        solution = pointOnPlane.dot(_normal) / rayPlaneAngle;
-        return -solution;
     }
     return -1.0;
 }
