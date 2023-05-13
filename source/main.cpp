@@ -57,8 +57,10 @@ int main(int ac, char **av)
     // world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(-45, 0, 0), Math::Vector3D(1, 0, 0), RayTracer::Color(1, 0, 0)));
     // world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(0, 70, 0), Math::Vector3D(0, 1, 0), RayTracer::Color(1, 1, 1)));
 
-    Parsing test(av[1]);
-    world.addPrimitive(test.FactoryPrimitives());
+
+    std::shared_ptr world_ptr = std::make_shared<RayTracer::World>(world);
+    Parsing test(world_ptr, av[2]);
+    // world.addPrimitive(test.FactoryPrimitives());
     if (ac == 2) {
         std::string help_checker = av[1];
         std::string help = "--help";
@@ -67,6 +69,6 @@ int main(int ac, char **av)
             return 0;
         }
     }
-    renderer.render(world, cam);
+    renderer.render(*world_ptr, cam);
     return 0;
 }

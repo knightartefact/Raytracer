@@ -6,13 +6,15 @@
 */
 
 #ifndef COLOR_HPP_
-#define COLOR_HPP_
+    #define COLOR_HPP_
+    #include <libconfig.h++>
 
 namespace RayTracer
 {
     class Color {
         public:
             Color();
+            Color(libconfig::Setting &config);
             Color(double r, double g, double b);
             Color(const Color &color);
             Color(Color &&color) = default;

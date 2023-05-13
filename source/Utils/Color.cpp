@@ -15,6 +15,13 @@ RayTracer::Color::Color() :
 {
 }
 
+RayTracer::Color::Color(libconfig::Setting &config)
+{
+    config.lookupValue("r", _r);
+    config.lookupValue("g", _g);
+    config.lookupValue("b", _b);
+}
+
 RayTracer::Color::Color(double r, double g, double b) :
     _r(clamp(r, 0, 1)),
     _g(clamp(g, 0, 1)),
