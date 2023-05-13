@@ -10,7 +10,6 @@
 #include <limits>
 #include "Ray.hpp"
 #include "Sphere.hpp"
-#include "Camera.hpp"
 #include "World.hpp"
 #include "Renderer.hpp"
 #include "Plane.hpp"
@@ -20,10 +19,6 @@
 
 int main(int ac, char **av)
 {
-    int width = 400;
-    int height = 300;
-    RayTracer::ImageRes resolution = {width, height};
-    RayTracer::Camera cam(Math::Point3D(0, 25, 50), resolution, std::atoi(av[1]));
     RayTracer::DirectionalLight light(0.4, RayTracer::Color(0.8, 1, 0), Math::Vector3D(-100, -300, -200));
     RayTracer::PointLight pointLight(50, RayTracer::Color(0.8, 1, 0), Math::Point3D(0, 50, 20));
     RayTracer::PointLight pointLight2(70, RayTracer::Color(0.8, 0.2, 0.6), Math::Point3D(0, 1, 0));
@@ -59,8 +54,7 @@ int main(int ac, char **av)
 
 
     std::shared_ptr world_ptr = std::make_shared<RayTracer::World>(world);
-    Parsing test(world_ptr, av[2]);
-    // world.addPrimitive(test.FactoryPrimitives());
+    Parsing parsed(world_ptr, av[1]);
     if (ac == 2) {
         std::string help_checker = av[1];
         std::string help = "--help";
@@ -69,6 +63,6 @@ int main(int ac, char **av)
             return 0;
         }
     }
-    renderer.render(*world_ptr, cam);
+    renderer.render(*world_ptr, parsed.getCamera());
     return 0;
 }

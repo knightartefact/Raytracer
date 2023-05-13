@@ -10,10 +10,6 @@
 #include "Plane.hpp"
 #include "Parsing.hpp"
 
-RayTracer::IPrimitive *FactoryPrimitives()
-{
-}
-
 Parsing::Parsing(std::shared_ptr<RayTracer::World> world, const char *file) :
     _world(world)
 {
@@ -26,18 +22,41 @@ Parsing::Parsing(std::shared_ptr<RayTracer::World> world, const char *file) :
         std::cerr << "Failed to parse the file\n";
         exit(84);
     }
+    this->parseCamera();
+    this->parsePrimitive();
+}
+
+Parsing::~Parsing()
+{
+}
+
+void Parsing::parseCamera()
+{
+    libconfig::Setting &camera = this->_configuration.lookup("Camera");
+    libconfig::Setting &pos = camera.lookup("Position");
+    libconfig::Setting &res = camera.lookup("Resolution");
+    libconfig::Setting &fov = camera.lookup("FieldOfView");
+    RayTracer::ImageRes resolution = {res.lookup("width"), res.lookup("height")};
+    Math::Point3D position(pos);
+
+    _camera = std::make_unique<RayTracer::Camera>(pos, resolution, fov);
+}
+
+RayTracer::Camera Parsing::getCamera()
+{
+    return RayTracer::Camera(*_camera.get());
+}
+
+void Parsing::parsePrimitive()
+{
     libconfig::Setting &primitive = this->_configuration.lookup("Primitives");
-    libconfig::Setting &spheres = this->_configuration.lookup("Primitives.Spheres");
-    libconfig::Setting &planes = this->_configuration.lookup("Primitives.Planes");
+    libconfig::Setting &spheres = primitive.lookup("Spheres");
+    libconfig::Setting &planes = primitive.lookup("Planes");
 
     for (int i = 0; i < spheres.getLength(); ++i)
         _world.get()->addPrimitive(this->FactoryPrimitives(Primitives::Sphere, spheres[i]));
     for (int i = 0; i < planes.getLength(); ++i)
         _world.get()->addPrimitive(this->FactoryPrimitives(Primitives::Plane, planes[i]));
-}
-
-Parsing::~Parsing()
-{
 }
 
 std::unique_ptr<RayTracer::IPrimitive> Parsing::FactoryPrimitives(Primitives primitives, libconfig::Setting &config)
