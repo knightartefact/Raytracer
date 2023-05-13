@@ -50,9 +50,9 @@ int main(int ac, char **av)
     // world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(50, -20, -10), 50, RayTracer::Color(0.8, 1, 0.2)));
 
     // world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(-30, 10, -10), 20, RayTracer::Color(1, 1, 1)));
-    world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(30, 30, -20), 20, RayTracer::Color(0.25, 0.25, 1)));
-    world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(0, 0, -45), Math::Vector3D(0, 0, 1), RayTracer::Color(1, 1, 1)));
-    world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(0, 0, 0), Math::Vector3D(0, 1, 0), RayTracer::Color(1, 1, 1)));
+    // world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(30, 30, -20), 20, RayTracer::Color(0.25, 0.25, 1)));
+    // world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(0, 0, -45), Math::Vector3D(0, 0, 1), RayTracer::Color(1, 1, 1)));
+    // world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(0, 0, 0), Math::Vector3D(0, 1, 0), RayTracer::Color(1, 1, 1)));
     // world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(45, 0, 0), Math::Vector3D(1, 0, 0), RayTracer::Color(0, 1, 0)));
     // world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(-45, 0, 0), Math::Vector3D(1, 0, 0), RayTracer::Color(1, 0, 0)));
     // world.addPrimitive(std::make_shared<RayTracer::Plane>(Math::Point3D(0, 70, 0), Math::Vector3D(0, 1, 0), RayTracer::Color(1, 1, 1)));

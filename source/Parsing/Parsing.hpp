@@ -12,7 +12,7 @@
     #include "Sphere.hpp"
 
 enum Primitives {
-    Plan,
+    Plane,
     Sphere
 };
 

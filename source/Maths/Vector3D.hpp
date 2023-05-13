@@ -6,8 +6,9 @@
 */
 
 #ifndef VECTOR3D_HPP_
-#define VECTOR3D_HPP_
-#include <iostream>
+    #define VECTOR3D_HPP_
+    #include <iostream>
+    #include <libconfig.h++>
 
 namespace Math
 {
@@ -16,6 +17,7 @@ namespace Math
     class Vector3D {
         public:
             Vector3D();
+            Vector3D(libconfig::Setting &config);
             Vector3D(double x, double y, double z);
             Vector3D(const Vector3D &vector);
             Vector3D(const Point3D &point);

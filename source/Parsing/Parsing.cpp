@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <memory>
+#include "Plane.hpp"
 #include "Parsing.hpp"
 
 RayTracer::IPrimitive *FactoryPrimitives()
@@ -26,17 +27,13 @@ Parsing::Parsing(std::shared_ptr<RayTracer::World> world, const char *file) :
         exit(84);
     }
     libconfig::Setting &primitive = this->_configuration.lookup("Primitives");
-
-    std::string bouchon_de_liège;
     libconfig::Setting &spheres = this->_configuration.lookup("Primitives.Spheres");
-    _world.get()->addPrimitive(this->FactoryPrimitives(Primitives::Sphere, spheres[0]));
-    // std::cout << "Paroles : " << bouchon_de_liège << std::endl;
-    int horloge;
-    spheres[0].lookupValue("x", horloge);
-    // std::cout << horloge << std::endl;
-    // std::cout << "Je les baise " << pd << std::endl;
-    // std::cout << "Spheres length" << spheres.getLength() << std::endl;
-    // this->FactoryPrimitives(Primitives::Sphere, Math::Point3D(-30, 10, -10), 20, RayTracer::Color(1, 1, 1));
+    libconfig::Setting &planes = this->_configuration.lookup("Primitives.Planes");
+
+    for (int i = 0; i < spheres.getLength(); ++i)
+        _world.get()->addPrimitive(this->FactoryPrimitives(Primitives::Sphere, spheres[i]));
+    for (int i = 0; i < planes.getLength(); ++i)
+        _world.get()->addPrimitive(this->FactoryPrimitives(Primitives::Plane, planes[i]));
 }
 
 Parsing::~Parsing()
@@ -45,14 +42,20 @@ Parsing::~Parsing()
 
 std::unique_ptr<RayTracer::IPrimitive> Parsing::FactoryPrimitives(Primitives primitives, libconfig::Setting &config)
 {
-    Math::Point3D position(config);
+    libconfig::Setting &pos = config.lookup("Pos");
     libconfig::Setting &color_setting = config.lookup("Color");
+    Math::Point3D position(pos);
     RayTracer::Color color(color_setting);
 
     if (primitives == Primitives::Sphere) {
         double radius = 0.0f;
         config.lookupValue("r", radius);
         return std::make_unique<RayTracer::Sphere>(position, radius, color);
+    }
+    if (primitives == Primitives::Plane) {
+        libconfig::Setting &norm = config.lookup("Normal");
+        Math::Vector3D normal(norm);
+        return std::make_unique<RayTracer::Plane>(position, normal, color);
     }
     return nullptr;
 }

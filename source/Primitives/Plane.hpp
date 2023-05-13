@@ -6,7 +6,7 @@
 */
 
 #ifndef PLANE_HPP_
-#define PLANE_HPP_
+    #define PLANE_HPP_
 
 #include "APrimitive.hpp"
 
