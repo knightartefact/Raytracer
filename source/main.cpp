@@ -23,13 +23,13 @@ int main(int ac, char **av)
     RayTracer::PointLight pointLight(50, RayTracer::Color(0.8, 1, 0), Math::Point3D(0, 50, 20));
     RayTracer::PointLight pointLight2(70, RayTracer::Color(0.8, 0.2, 0.6), Math::Point3D(0, 1, 0));
     RayTracer::PointLight pointLight3(100, RayTracer::Color(0.2, 0.9, 0.1), Math::Point3D(50, 70, 20));
-    RayTracer::World world(0.2);
+    RayTracer::World world;
     RayTracer::Renderer renderer;
 
     // world.addLight(std::make_shared<RayTracer::PointLight>(pointLight));
-    world.addLight(std::make_shared<RayTracer::PointLight>(pointLight2));
+    // world.addLight(std::make_shared<RayTracer::PointLight>(pointLight2));
     // world.addLight(std::make_shared<RayTracer::PointLight>(pointLight3));
-    world.addLight(std::make_shared<RayTracer::DirectionalLight>(light));
+    // world.addLight(std::make_shared<RayTracer::DirectionalLight>(light));
 
     // world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(20, 3, -5), 29, RayTracer::Color(0.5, 0.5 ,0.5)));
     // world.addPrimitive(std::make_shared<RayTracer::Sphere>(Math::Point3D(-180, 10, -10), 50, RayTracer::Color(0.2, 0.5 ,0.9)));

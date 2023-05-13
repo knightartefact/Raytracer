@@ -9,6 +9,8 @@
 #include <memory>
 #include "Plane.hpp"
 #include "Parsing.hpp"
+#include "PointLight.hpp"
+#include "DirectionalLight.hpp"
 
 Parsing::Parsing(RayTracer::World &world, const char *file) :
     _world(world)
@@ -24,13 +26,14 @@ Parsing::Parsing(RayTracer::World &world, const char *file) :
     }
     this->parseCamera();
     this->parsePrimitive();
+    this->parseLights();
 }
 
 Parsing::~Parsing()
 {
 }
 
-Math::Point3D parseVector(const libconfig::Setting &config)
+Math::Vector3D parseVector(const libconfig::Setting &config)
 {
     Math::Vector3D vect;
 
@@ -109,4 +112,38 @@ std::unique_ptr<RayTracer::IPrimitive> Parsing::FactoryPrimitives(Primitives pri
         return std::make_unique<RayTracer::Plane>(position, normal, color);
     }
     return nullptr;
+}
+
+std::shared_ptr<RayTracer::ILight> lightFactory(Lights type, const libconfig::Setting &config)
+{
+    double intensity;
+    RayTracer::Color color = parseColor(config.lookup("Color"));
+
+    config.lookupValue("Intensity", intensity);
+    if (type == Lights::Point) {
+        Math::Point3D pos = parsePoint(config.lookup("Pos"));
+        return std::make_shared<RayTracer::PointLight>(intensity, color, pos);
+    }
+    if (type == Lights::Directional) {
+        Math::Vector3D dir = parseVector(config.lookup("Direction"));
+        return std::make_shared<RayTracer::DirectionalLight>(intensity, color, dir);
+    }
+    return nullptr;
+}
+
+void Parsing::parseLights()
+{
+    double ambient;
+    libconfig::Setting &lights = _configuration.lookup("Lights");
+    libconfig::Setting &point = lights.lookup("Point");
+    libconfig::Setting &directional = lights.lookup("Directional");
+
+    lights.lookupValue("Ambient", ambient);
+    _world.addAmbientLightItensity(ambient);
+    for (int i = 0; i < point.getLength(); ++i) {
+        _world.addLight(lightFactory(Lights::Point, point[i]));
+    }
+    for (int i = 0; i < directional.getLength(); ++i) {
+        _world.addLight(lightFactory(Lights::Directional, directional[i]));
+    }
 }

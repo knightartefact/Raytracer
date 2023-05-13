@@ -17,6 +17,11 @@ enum Primitives {
     Sphere
 };
 
+enum Lights {
+    Directional,
+    Point
+};
+
 class Parsing {
     public:
         Parsing(RayTracer::World &world, const char *file);
@@ -24,6 +29,7 @@ class Parsing {
 
 
         void parseCamera();
+        void parseLights();
         void parsePrimitive();
         RayTracer::Camera getCamera();
         double get_primitive_value(libconfig::Setting &config, std::string value);

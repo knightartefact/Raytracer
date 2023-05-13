@@ -35,6 +35,7 @@ namespace RayTracer
             std::vector<std::shared_ptr<IPrimitive>> objects() const;
 
             double aLightIntensity() const;
+            void addAmbientLightItensity(double intensity);
             void addLight(std::shared_ptr<ILight> light);
             std::vector<std::shared_ptr<ILight>> lights() const;
 
