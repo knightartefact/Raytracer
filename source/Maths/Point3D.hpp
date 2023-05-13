@@ -17,7 +17,6 @@ namespace Math
     class Point3D {
         public:
             Point3D();
-            Point3D(libconfig::Setting &config);
             Point3D(double x, double y, double z);
             Point3D(const Point3D &point);
             Point3D(const Vector3D &point);

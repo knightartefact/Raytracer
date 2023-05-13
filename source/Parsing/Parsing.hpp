@@ -19,8 +19,9 @@ enum Primitives {
 
 class Parsing {
     public:
-        Parsing(std::shared_ptr<RayTracer::World> world, const char *file);
+        Parsing(RayTracer::World &world, const char *file);
         ~Parsing();
+
 
         void parseCamera();
         void parsePrimitive();
@@ -30,7 +31,7 @@ class Parsing {
     protected:
         std::unique_ptr<RayTracer::Camera> _camera;
         libconfig::Config _configuration;
-        std::shared_ptr<RayTracer::World> _world;
+        RayTracer::World &_world;
 };
 
 #endif /* !PARSING_HPP_ */

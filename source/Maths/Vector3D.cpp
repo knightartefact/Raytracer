@@ -17,13 +17,6 @@ Math::Vector3D::Vector3D() :
 {
 }
 
-Math::Vector3D::Vector3D(libconfig::Setting &config)
-{
-    config.lookupValue("x", _x);
-    config.lookupValue("y", _y);
-    config.lookupValue("z", _z);
-}
-
 Math::Vector3D::Vector3D(double x, double y, double z) :
     _x(x),
     _y(y),

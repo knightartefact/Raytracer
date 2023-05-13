@@ -15,13 +15,6 @@ Math::Point3D::Point3D() :
 {
 }
 
-Math::Point3D::Point3D(libconfig::Setting &config)
-{
-    config.lookupValue("x", _x);
-    config.lookupValue("y", _y);
-    config.lookupValue("z", _z);
-}
-
 Math::Point3D::Point3D(double x, double y, double z) :
     _x(x),
     _y(y),
