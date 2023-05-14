@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2023
 ** raytracer [SSH: rayanbn.eu]
 ** File description:
-** Torus
+** Cube
 */
 
-#ifndef CONE_HPP_
-#define CONE_HPP_
+#ifndef CUBE_HPP_
+#define CUBE_HPP_
 #include "Point3D.hpp"
 #include "Color.hpp"
 #include "APrimitive.hpp"
@@ -15,13 +15,13 @@ namespace RayTracer
 {
     class Ray;
 
-    class Cone : public APrimitive {
+    class Cube : public APrimitive {
         public:
-            Cone(const Math::Point3D &center, double radius, double height, const Color &color);
-            Cone(const Cone &cone);
-            ~Cone() = default;
+            Cube(const Math::Point3D &center, double radius, const Color &color);
+            Cube(const Cube &cube);
+            ~Cube() = default;
 
-            Cone &operator=(const Cone &cone);
+            Cube &operator=(const Cube &cube);
 
             double hit(const Ray &ray) const override;
             Math::Vector3D normal(const Math::Point3D &point) const override;
@@ -30,9 +30,13 @@ namespace RayTracer
         private:
             Color _color;
             Math::Point3D _center;
-            double _radius;
-            double _height;
+            float _xMax;
+            float _yMax;
+            float _zMax;
+            float _xMin;
+            float _yMin;
+            float _zMin;
     };
 }
 
-#endif /* !CONE_HPP_ */
+#endif /* !CUBE_HPP_ */

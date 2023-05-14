@@ -10,9 +10,11 @@
 #include <cmath>
 #include <math.h>
 
-RayTracer::Cone::Cone(const Math::Point3D &center, double radius, const Color &color) :
+RayTracer::Cone::Cone(const Math::Point3D &center, double radius, double height, const Color &color) :
     APrimitive(center),
-    _color(color)
+    _color(color),
+    _radius(radius),
+    _height(height)
 {
 }
 
@@ -37,7 +39,8 @@ double RayTracer::Cone::hit(const RayTracer::Ray &ray) const
 Math::Vector3D RayTracer::Cone::normal(const Math::Point3D &point) const
 {
     float r = sqrt((point._x - _center._x) * (point._x - _center._x) + (point._z - _center._z)*(point._z - _center._z));
-    Math::Vector3D normal = Math::Vector3D (point._x-_center._x, r * (_radius / _height), point._z - _center._z);
+    Math::Vector3D normal = Math::Vector3D (point._x - _center._x, r * (_radius / _height), point._z - _center._z);
+
     normal.normalize();
     return normal;
 }
