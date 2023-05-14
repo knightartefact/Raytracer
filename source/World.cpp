@@ -46,6 +46,11 @@ double RayTracer::World::aLightIntensity() const
     return _ambientLightIntensity;
 }
 
+void RayTracer::World::addAmbientLightItensity(double intensity)
+{
+    _ambientLightIntensity = intensity;
+}
+
 void RayTracer::World::addLight(std::shared_ptr<ILight> light)
 {
     _lights.push_back(light);

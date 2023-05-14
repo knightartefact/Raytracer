@@ -6,8 +6,9 @@
 */
 
 #ifndef POINT3D_HPP_
-#define POINT3D_HPP_
-#include <ostream>
+    #define POINT3D_HPP_
+    #include <libconfig.h++>
+    #include <ostream>
 
 namespace Math
 {

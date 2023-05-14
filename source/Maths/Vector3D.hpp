@@ -6,8 +6,8 @@
 */
 
 #ifndef VECTOR3D_HPP_
-#define VECTOR3D_HPP_
-#include <iostream>
+    #define VECTOR3D_HPP_
+    #include <iostream>
 
 namespace Math
 {
