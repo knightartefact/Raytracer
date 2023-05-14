@@ -86,6 +86,7 @@ Math::Vector3D Math::Vector3D::origin(const Vector3D &vec) const
 {
     Math::Vector3D origin(0.0, 0.0, 0.0);
 
+    static_cast<void>(vec);
     return origin;
 }
 

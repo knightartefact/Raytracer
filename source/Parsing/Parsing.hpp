@@ -14,7 +14,8 @@
 
 enum Primitives {
     Plane,
-    Sphere
+    Sphere,
+    Cylinder
 };
 
 enum Lights {

@@ -21,6 +21,7 @@ SRC	=	source/main.cpp\
 		source/World.cpp\
 		source/Primitives/Sphere.cpp\
 		source/Primitives/Plane.cpp\
+		source/Primitives/Cylinder.cpp\
 		source/Primitives/APrimitive.cpp\
 		source/Maths/Vector3D.cpp\
 		source/Maths/Point3D.cpp\

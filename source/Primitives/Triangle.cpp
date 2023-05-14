@@ -40,7 +40,6 @@ RayTracer::Triangle &RayTracer::Triangle::operator=(const Triangle &triangle)
 
 double RayTracer::Triangle::hit(const RayTracer::Ray &ray) const
 {
-    
 }
 
 Math::Vector3D RayTracer::Triangle::normal(const Math::Point3D &point) const

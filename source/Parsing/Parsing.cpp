@@ -8,6 +8,7 @@
 #include <iostream>
 #include <memory>
 #include "Plane.hpp"
+#include "Cylinder.hpp"
 #include "Parsing.hpp"
 #include "PointLight.hpp"
 #include "DirectionalLight.hpp"
@@ -87,11 +88,14 @@ void Parsing::parsePrimitive()
     libconfig::Setting &primitive = this->_configuration.lookup("Primitives");
     libconfig::Setting &spheres = primitive.lookup("Spheres");
     libconfig::Setting &planes = primitive.lookup("Planes");
+    libconfig::Setting &cylinders = primitive.lookup("Cylinders");
 
     for (int i = 0; i < spheres.getLength(); ++i)
         _world.addPrimitive(this->FactoryPrimitives(Primitives::Sphere, spheres[i]));
     for (int i = 0; i < planes.getLength(); ++i)
         _world.addPrimitive(this->FactoryPrimitives(Primitives::Plane, planes[i]));
+    for (int i = 0; i < cylinders.getLength(); ++i)
+        _world.addPrimitive(this->FactoryPrimitives(Primitives::Cylinder, cylinders[i]));
 }
 
 std::unique_ptr<RayTracer::IPrimitive> Parsing::FactoryPrimitives(Primitives primitives, libconfig::Setting &config)
@@ -101,10 +105,13 @@ std::unique_ptr<RayTracer::IPrimitive> Parsing::FactoryPrimitives(Primitives pri
     Math::Point3D position = parsePoint(pos);
     RayTracer::Color color = parseColor(color_setting);
 
-    if (primitives == Primitives::Sphere) {
+    if ((primitives == Primitives::Sphere) || (primitives == Primitives::Cylinder)) {
         double radius = 0.0f;
         config.lookupValue("r", radius);
-        return std::make_unique<RayTracer::Sphere>(position, radius, color);
+        if (primitives == Primitives::Cylinder)
+            return std::make_unique<RayTracer::Cylinder>(position, radius, color);
+        if (primitives == Primitives::Sphere)
+            return std::make_unique<RayTracer::Sphere>(position, radius, color);
     }
     if (primitives == Primitives::Plane) {
         libconfig::Setting &norm = config.lookup("Normal");

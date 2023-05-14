@@ -48,6 +48,7 @@ double RayTracer::Plane::hit(const Ray &ray) const
 
 Math::Vector3D RayTracer::Plane::normal(const Math::Point3D &point) const
 {
+    static_cast<void>(point);
     return _normal;
 }
 
