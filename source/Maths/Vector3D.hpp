@@ -27,6 +27,10 @@ namespace Math
             static Math::Vector3D normalize(const Math::Vector3D &vec);
             void normalize();
 
+            Math::Vector3D cross(const Vector3D &vec) const;
+            Math::Vector3D origin(const Vector3D &vec) const;
+            float direction(const Vector3D &vec) const;
+
             double dot(const Vector3D &vec) const;
             double dot(const Point3D &point) const;
 

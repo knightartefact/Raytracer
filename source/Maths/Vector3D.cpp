@@ -65,6 +65,30 @@ Math::Vector3D Math::Vector3D::normalize(const Math::Vector3D &vec)
     return normalized;
 }
 
+Math::Vector3D Math::Vector3D::cross(const Vector3D &vec) const
+{
+    Vector3D newVec;
+
+    newVec._x = (_y * vec._z) - (_z * vec._y);
+    newVec._y = (_z * vec._x) - (_x * vec._z);
+    newVec._z = (_x * vec._y) - (_y * vec._x);
+    return newVec;
+}
+
+float Math::Vector3D::direction(const Vector3D &vec) const
+{
+    float direction = std::atan2(vec._y, vec._x);
+
+    return direction;
+}
+
+Math::Vector3D Math::Vector3D::origin(const Vector3D &vec) const
+{
+    Math::Vector3D origin(0.0, 0.0, 0.0);
+
+    return origin;
+}
+
 double Math::Vector3D::dot(const Vector3D &vec) const
 {
     double dot_product = (vec._x * _x) + (vec._y * _y) + (vec._z * _z);
